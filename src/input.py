@@ -10,8 +10,8 @@ from keras.layers import ZeroPadding2D, Convolution2D, MaxPooling2D
 from keras.models import Sequential, model_from_json
 
 
-def input_images(test_path='/Users/nevethap/PycharmProjects/retina/data/images/', img_width=270, img_height=270):
-    labels = pd.read_csv('/Users/nevethap/PycharmProjects/retina/data/labels_for_class0_and_class1.csv', header=0)
+def input_images(test_path='../data/images/', img_width=270, img_height=270):
+    labels = pd.read_csv('../data/labels_for_class0_and_class1.csv', header=0)
     testxs = []
     testys = []
 
@@ -26,14 +26,14 @@ def input_images(test_path='/Users/nevethap/PycharmProjects/retina/data/images/'
     print(len(testxs))
     print(len(testys))
     X_test = np.reshape(testxs, [200, 3, 270, 270])
-    mean_image = np.mean(X_test, axis=0)
-    X_test = X_test - mean_image.astype(np.uint8)
+    # mean_image = np.mean(X_test, axis=0)
+    # X_test = X_test - mean_image.astype(np.uint8)
     Y_test = np.concatenate(testys)
 
     return X_test, Y_test
 
 
-def load_vgg16_model(weights_path='/Users/nevethap/PycharmProjects/retina/data/models/vgg16_weights.h5', img_height=270,
+def load_vgg16_model(weights_path='../data/models/vgg16_weights.h5', img_height=270,
                      img_width=270):
     model = Sequential()
     model.add(ZeroPadding2D((1, 1), input_shape=(3, img_width, img_height)))
@@ -87,8 +87,8 @@ def load_vgg16_model(weights_path='/Users/nevethap/PycharmProjects/retina/data/m
     return model
 
 
-def load_top_model(top_model_weights_path='/Users/nevethap/PycharmProjects/retina/data/models/top_model_weights.h5',
-                   top_model_json_path='/Users/nevethap/PycharmProjects/retina/data/models/model.json'):
+def load_top_model(top_model_weights_path='../data/models/top_model_weights.h5',
+                   top_model_json_path='../data/models/model.json'):
     json_file = open(top_model_json_path, 'r')
     top_model_json = json_file.read()
     json_file.close()
